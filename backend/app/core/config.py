@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file="../.env", env_file_encoding="utf-8", extra="ignore")
 
     database_url: str = "postgresql://voice_rag:voice_rag@localhost:5433/voice_rag"
-    api_cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+    api_cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173,https://pdf-analyzer-web.onrender.com"
 
     gemini_api_key: str = ""
     gemini_answer_model: str = "gemini-3.1-flash-lite"
