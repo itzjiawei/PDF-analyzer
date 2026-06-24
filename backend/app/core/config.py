@@ -25,6 +25,8 @@ class Settings(BaseSettings):
     retrieval_candidate_count: int = 28
     retrieval_context_count: int = 6
     answer_max_output_tokens: int = 650
+    auto_seed_sample_book: bool = False
+    sample_book_path: str = "../sample_data/aurora_operations_handbook.pdf"
 
     @property
     def cors_origins(self) -> list[str]:

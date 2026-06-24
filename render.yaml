@@ -14,6 +14,10 @@ services:
           property: connectionString
       - key: API_CORS_ORIGINS
         value: https://pdf-analyzer-web.onrender.com,http://localhost:5173,http://127.0.0.1:5173
+      - key: AUTO_SEED_SAMPLE_BOOK
+        value: true
+      - key: SAMPLE_BOOK_PATH
+        value: ../sample_data/aurora_operations_handbook.pdf
       - key: GEMINI_API_KEY
         sync: false
       - key: DEEPGRAM_API_KEY

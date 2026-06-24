@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import router
 from app.core.config import get_settings
 from app.db.database import init_db
+from app.db.seed import seed_sample_book
 
 
 def create_app() -> FastAPI:
@@ -23,8 +24,9 @@ def create_app() -> FastAPI:
     app.include_router(router, prefix="/api")
 
     @app.on_event("startup")
-    def startup() -> None:
+    async def startup() -> None:
         init_db()
+        await seed_sample_book()
 
     return app
 

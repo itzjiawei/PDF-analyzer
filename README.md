@@ -55,7 +55,9 @@ Deployment steps:
    - `GEMINI_API_KEY`
    - `DEEPGRAM_API_KEY`
 4. Deploy the Blueprint.
-5. Open the frontend URL, upload `sample_data/aurora_operations_handbook.pdf`, then ask a question.
+5. Open the frontend URL, select `Aurora Operations Handbook` from Book Library, then ask a question.
+
+On Render, `AUTO_SEED_SAMPLE_BOOK=true` indexes the Aurora sample into the deployed database on first backend startup, so the sample appears in Book Library after deployment. Locally, the default is `false` so you can choose whether to upload or seed the sample.
 
 The blueprint assumes these Render service URLs:
 
