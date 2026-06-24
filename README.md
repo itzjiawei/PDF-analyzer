@@ -39,6 +39,36 @@ npm run dev
 
 Open `http://localhost:5173`.
 
+## Deploy on Render
+
+This repo includes `render.yaml` so the app can be deployed as a Render Blueprint:
+
+- `pdf-analyzer-web`: Vite/React static site
+- `pdf-analyzer-api`: FastAPI backend
+- `pdf-analyzer-db`: PostgreSQL database with `pgvector`
+
+Deployment steps:
+
+1. Push this repository to GitHub.
+2. In Render, create a new Blueprint from the GitHub repository.
+3. Add these secret environment variables when Render asks:
+   - `GEMINI_API_KEY`
+   - `DEEPGRAM_API_KEY`
+4. Deploy the Blueprint.
+5. Open the frontend URL, upload `sample_data/aurora_operations_handbook.pdf`, then ask a question.
+
+The blueprint assumes these Render service URLs:
+
+- Frontend: `https://pdf-analyzer-web.onrender.com`
+- Backend: `https://pdf-analyzer-api.onrender.com/api`
+
+If Render assigns different service URLs, update:
+
+- Backend `API_CORS_ORIGINS`
+- Frontend `VITE_API_BASE`
+
+If your Render account does not offer a free PostgreSQL plan, use Render's smallest PostgreSQL plan or connect the backend to an external PostgreSQL database that supports `pgvector`.
+
 ## API Keys
 
 Set `GEMINI_API_KEY` in `.env` for the full ASR -> RAG -> LLM -> TTS path.
