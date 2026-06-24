@@ -9,6 +9,49 @@
 - RAG: PDF text is parsed into detected sections, indexed as section-aware chunks, and retrieved with hybrid search.
 - TTS: generated answers are sent to Gemini text-to-speech and returned as base64 WAV audio for browser playback.
 
+## System Architecture
+
+```mermaid
+flowchart LR
+    User["User in browser"] --> Web["React / Vite frontend"]
+
+    Web --> Upload["Upload PDF"]
+    Web --> Voice["Record microphone question"]
+    Web --> Text["Type or edit question"]
+    Web --> Playback["Play spoken answer"]
+    Web --> Evidence["View retrieved evidence"]
+
+    Upload --> API["FastAPI backend"]
+    Voice --> API
+    Text --> API
+
+    API --> PDF["PDF parser<br/>pypdf"]
+    PDF --> Chunking["Section-aware chunking<br/>chapter, page, overlap metadata"]
+    Chunking --> Embed["Gemini embeddings"]
+    Embed --> DB[("PostgreSQL + pgvector<br/>documents, chunks, qa_events")]
+
+    API --> ASR["Deepgram ASR<br/>Gemini fallback"]
+    ASR --> Retrieval["Hybrid retrieval<br/>pgvector + full-text search"]
+    Text --> Retrieval
+    Retrieval --> DB
+    DB --> Rerank["Lightweight reranking"]
+    Rerank --> LLM["Gemini LLM<br/>grounded answer with citations"]
+    LLM --> TTS["Gemini TTS"]
+
+    LLM --> Web
+    TTS --> Web
+    DB --> Evidence
+    Playback --> User
+    Evidence --> User
+```
+
+High-level flow:
+
+1. Uploaded PDFs are parsed, chunked by detected sections, embedded, and stored in PostgreSQL with `pgvector`.
+2. A user question is captured through voice or text. Voice input is transcribed before retrieval.
+3. The backend retrieves relevant chunks using hybrid semantic and keyword search, reranks them, and passes only the selected evidence to Gemini.
+4. The generated answer, citations, and synthesized audio are returned to the frontend for review and playback.
+
 ## Retrieval Quality
 
 Naive fixed-size chunking is avoided. The indexer uses:
