@@ -62,7 +62,7 @@ On Render, `AUTO_SEED_SAMPLE_BOOK=true` indexes the Aurora sample into the deplo
 The blueprint assumes these Render service URLs:
 
 - Frontend: `https://pdf-analyzer-web.onrender.com`
-- Backend: `https://pdf-analyzer-api.onrender.com/api`
+- Backend: `https://pdf-analyzer-api-3qy8.onrender.com/api`
 
 If Render assigns different service URLs, update:
 

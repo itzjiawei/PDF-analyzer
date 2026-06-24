@@ -46,7 +46,7 @@ services:
     staticPublishPath: frontend/dist
     envVars:
       - key: VITE_API_BASE
-        value: https://pdf-analyzer-api.onrender.com/api
+        value: https://pdf-analyzer-api-3qy8.onrender.com/api
     routes:
       - type: rewrite
         source: /*
